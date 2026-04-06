@@ -1,0 +1,37 @@
+import { WEIGHTS } from '../utils/constants.js';
+export class Scorer {
+    static calculate(issues) {
+        const catScores = {
+            bundle: 100,
+            dependency: 100,
+            component: 100,
+            render: 100,
+            memory: 100,
+            image: 100,
+            api: 100,
+            build: 100,
+        };
+        for (const issue of issues) {
+            const deduction = this.getDeduction(issue.severity);
+            catScores[issue.category] = Math.max(0, catScores[issue.category] - deduction);
+        }
+        let overall = 0;
+        const categories = Object.keys(WEIGHTS);
+        for (const cat of categories) {
+            overall += catScores[cat] * (WEIGHTS[cat] || 0);
+        }
+        return {
+            overall: Math.round(overall),
+            categories: catScores,
+        };
+    }
+    static getDeduction(severity) {
+        switch (severity) {
+            case 'critical': return 40;
+            case 'high': return 25;
+            case 'medium': return 15;
+            case 'low': return 5;
+            default: return 0;
+        }
+    }
+}

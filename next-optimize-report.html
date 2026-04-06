@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next Optimize Report - unknown</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #3b82f6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --border: #334155;
+        }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 2rem;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .score-gauge {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            border: 8px solid #10b981;
+            color: #10b981;
+            box-shadow: 0 0 20px #10b98122;
+        }
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+        }
+        .card h3 { margin: 0 0 0.5rem 0; font-size: 0.875rem; color: var(--text-muted); text-transform: uppercase; }
+        .card p { margin: 0; font-size: 1.25rem; font-weight: 600; }
+        .score-list { margin: 0; padding: 0; list-style: none; }
+        .score-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .issue-card {
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--primary);
+        }
+        .issue-card.critical { border-left-color: var(--error); }
+        .issue-card.high { border-left-color: var(--warning); }
+        .severity {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            margin-right: 0.5rem;
+        }
+        .sev-critical { background: var(--error)22; color: var(--error); }
+        .sev-high { background: var(--warning)22; color: var(--warning); }
+        .recommendation {
+            background: var(--primary)11;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--primary)33;
+        }
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h1>Next Optimize Report</h1>
+                <p style="color: var(--text-muted)">Generated on 06/04/2026, 12:34:30</p>
+            </div>
+            <div class="score-gauge">100</div>
+        </header>
+
+        <div class="summary-grid">
+            <div class="card">
+                <h3>Framework</h3>
+                <p>UNKNOWN </p>
+            </div>
+            <div class="card">
+                <h3>Build Tool</h3>
+                <p>UNKNOWN</p>
+            </div>
+            <div class="card">
+                <h3>Issues Found</h3>
+                <p>0</p>
+            </div>
+            <div class="card">
+                <h3>Package Manager</h3>
+                <p>npm</p>
+            </div>
+        </div>
+
+        <section>
+            <h2>Analysis Summary</h2>
+            <div class="card">
+                <div class="summary-grid">
+                    <div>
+                        <h3>Category Scores</h3>
+                        <ul class="score-list">
+                            
+                                <li class="score-item">
+                                    <span>Bundle</span>
+                                    <span style="color: var(--success)">100</span>
+                                </li>
+                            
+                                <li class="score-item">
+                                    <span>Dependency</span>
+                                    <span style="color: var(--success)">100</span>
+                                </li>
+                            
+                                <li class="score-item">
+                                    <span>Component</span>
+                                    <span style="color: var(--success)">100</span>
+                                </li>
+                            
+                                <li class="score-item">
+                                    <span>Render</span>
+                                    <span style="color: var(--success)">100</span>
+                                </li>
+                            
+                                <li class="score-item">
+                                    <span>Memory</span>
+                                    <span style="color: var(--success)">100</span>
+                                </li>
+                            
+                                <li class="score-item">
+                                    <span>Image</span>
+                                    <span style="color: var(--success)">100</span>
+                                </li>
+                            
+                                <li class="score-item">
+                                    <span>Api</span>
+                                    <span style="color: var(--success)">100</span>
+                                </li>
+                            
+                                <li class="score-item">
+                                    <span>Build</span>
+                                    <span style="color: var(--success)">100</span>
+                                </li>
+                            
+                        </ul>
+                    </div>
+                    <div style="grid-column: span 2;">
+                        <h3>Top Recommendations</h3>
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section style="margin-top: 2rem;">
+            <h2>Detected Issues</h2>
+            <p>No issues detected! 🎉</p>
+        </section>
+
+        <footer>
+            Generated by Next Optimize CLI v1.0.0
+        </footer>
+    </div>
+</body>
+</html>
+    

@@ -1,0 +1,51 @@
+import path from 'path';
+import { Project, SyntaxKind } from 'ts-morph';
+import { AnalysisEngine } from '../../core/analyzer.js';
+import { findFiles } from '../../utils/fileUtils.js';
+export class ComponentAnalyzer extends AnalysisEngine {
+    name = 'Component';
+    isApplicable(project) {
+        return project.framework !== 'unknown';
+    }
+    async analyze(project) {
+        const issues = [];
+        const tsFiles = await findFiles('src/**/*.{ts,tsx,js,jsx}', project.rootPath, ['node_modules/**', '.next/**']);
+        const morphProject = new Project();
+        morphProject.addSourceFilesAtPaths(tsFiles);
+        for (const sourceFile of morphProject.getSourceFiles()) {
+            const relativePath = path.relative(project.rootPath, sourceFile.getFilePath());
+            // Find all function-based components
+            sourceFile.getFunctions().forEach(f => this.analyzeFunctionalComponent(f, relativePath, issues));
+            sourceFile.getVariableDeclarations().forEach(v => {
+                const initializer = v.getInitializer();
+                if (initializer && (initializer.getKind() === SyntaxKind.ArrowFunction || initializer.getKind() === SyntaxKind.FunctionExpression)) {
+                    this.analyzeFunctionalComponent(initializer, relativePath, issues, v.getName());
+                }
+            });
+            // Find all class-based components
+            sourceFile.getClasses().forEach(c => this.analyzeClassComponent(c, relativePath, issues));
+        }
+        return issues;
+    }
+    analyzeFunctionalComponent(node, file, issues, name) {
+        const compName = name || node.getName?.() || 'Anonymous';
+        if (!/^[A-Z]/.test(compName))
+            return; // Simple React component heuristic
+        const loc = node.getEndLineNumber() - node.getStartLineNumber();
+        if (loc > this.config.componentLocLimit) {
+            issues.push(this.createIssue('large-component', 'Large Component Detected', `Component "${compName}" is ${loc} lines long, exceeding limit of ${this.config.componentLocLimit}.`, 'medium', 'component', file, node.getStartLineNumber(), 'Split this component into smaller, reusable sub-components.'));
+        }
+        // Check for hook count
+        const hookCount = node.getDescendantsOfKind(SyntaxKind.CallExpression)
+            .filter(c => c.getExpression().getText().startsWith('use')).length;
+        if (hookCount > this.config.hookCountLimit) {
+            issues.push(this.createIssue('excessive-hooks', 'Excessive Hooks', `Component "${compName}" uses ${hookCount} hooks, exceeding limit of ${this.config.hookCountLimit}.`, 'high', 'component', file, node.getStartLineNumber(), 'Refactor complex logic into custom hooks or use a state management library.'));
+        }
+    }
+    analyzeClassComponent(node, file, issues) {
+        const loc = node.getEndLineNumber() - node.getStartLineNumber();
+        if (loc > this.config.componentLocLimit) {
+            issues.push(this.createIssue('large-class-component', 'Large Class Component Detected', `Class component "${node.getName() || 'Unknown'}" is ${loc} lines long.`, 'medium', 'component', file, node.getStartLineNumber(), 'Consider migrating to functional components or splitting.'));
+        }
+    }
+}
