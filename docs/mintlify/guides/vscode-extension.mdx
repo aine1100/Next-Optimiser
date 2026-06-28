@@ -1,0 +1,48 @@
+---
+title: VS Code Extension
+description: Inline performance diagnostics and one-click analysis in VS Code.
+---
+
+# VS Code Extension
+
+The Next Optimize VS Code extension provides inline diagnostics and commands.
+
+## Installation
+
+```bash
+cd extensions/vscode
+npm install
+npm run compile
+```
+
+Install via Extension Development Host or package as VSIX.
+
+## Commands
+
+| Command | Description |
+|---------|-------------|
+| `Next Optimize: Analyze Workspace` | Run full analysis |
+| `Next Optimize: Show Performance Score` | Display score from last report |
+
+## Settings
+
+| Setting | Default | Description |
+|---------|---------|-------------|
+| `nextOptimize.enableDiagnostics` | `true` | Show inline diagnostics |
+| `nextOptimize.severity` | `medium` | Minimum severity to display |
+
+## How It Works
+
+1. Runs `next-optimize analyze` in the workspace
+2. Reads `next-optimize-report.json`
+3. Maps issues to VS Code diagnostics with file/line locations
+4. Re-analyzes on file save (when enabled)
+
+## Diagnostic Example
+
+Issues appear as warnings in the Problems panel:
+
+```
+⚠ Inline Function Prop: The prop "onClick" is defined as an inline function.
+  Fix: Use useCallback to memoize this function.
+```

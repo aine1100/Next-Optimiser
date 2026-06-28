@@ -1,7 +1,7 @@
 import path from 'path';
 import { AnalysisEngine } from '../../core/analyzer.js';
 import { Project, SyntaxKind } from 'ts-morph';
-import { findFiles } from '../../utils/fileUtils.js';
+import { findSourceFiles } from '../../utils/scanUtils.js';
 export class ApiAnalyzer extends AnalysisEngine {
     name = 'API';
     isApplicable(project) {
@@ -9,7 +9,7 @@ export class ApiAnalyzer extends AnalysisEngine {
     }
     async analyze(project) {
         const issues = [];
-        const tsFiles = await findFiles('src/**/*.{ts,tsx,js,jsx}', project.rootPath, ['node_modules/**', '.next/**']);
+        const tsFiles = await findSourceFiles(project.rootPath, this.config);
         const morphProject = new Project();
         morphProject.addSourceFilesAtPaths(tsFiles);
         for (const sourceFile of morphProject.getSourceFiles()) {

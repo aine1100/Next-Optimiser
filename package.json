@@ -7,11 +7,22 @@
   "bin": {
     "next-optimize": "./dist/cli/index.js"
   },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "exports": {
+    ".": "./dist/index.js",
+    "./agent": "./dist/agent/agent.js",
+    "./package.json": "./package.json"
+  },
   "scripts": {
     "dev": "tsx src/cli/index.ts",
-    "build": "tsc",
+    "build": "tsc && node scripts/build-agent.mjs",
     "start": "node dist/cli/index.js",
-    "test": "vitest"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "docs": "cd docs/mintlify && npx mintlify dev"
   },
   "keywords": [
     "performance",
@@ -38,6 +49,7 @@
     "@types/node": "^20.11.24",
     "@types/ws": "^8.5.10",
     "tsx": "^4.7.1",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "vitest": "^1.3.1"
   }
 }

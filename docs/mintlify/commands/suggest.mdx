@@ -1,0 +1,46 @@
+---
+title: suggest
+description: Generate AI-assisted fix suggestions for detected performance issues.
+icon: lightbulb
+---
+
+# suggest
+
+Generate structured code fix suggestions from detected issues.
+
+```bash
+next-optimize suggest [options]
+```
+
+## Options
+
+| Flag | Description |
+|------|-------------|
+| `-o, --output <path>` | Write suggestions to a markdown file |
+
+## Examples
+
+```bash
+# Print to terminal
+next-optimize suggest
+
+# Save to file
+next-optimize suggest -o FIXES.md
+```
+
+## Supported Fix Templates
+
+| Issue | Suggestion |
+|-------|-----------|
+| Inline function props | Wrap with `useCallback` |
+| Inline object props | Wrap with `useMemo` |
+| Unmemoized list items | Wrap with `React.memo` |
+| Missing cleanup | Add `useEffect` return |
+| Legacy `<img>` | Replace with `next/image` |
+| Missing `"use client"` | Add directive |
+| Raw fetch in hook | Use TanStack Query |
+| Index as key | Use stable ID |
+| Heavy `moment` | Replace with `date-fns` |
+| Heavy `lodash` | Replace with `lodash-es` |
+
+Each suggestion includes **before** and **after** code snippets with a confidence level.

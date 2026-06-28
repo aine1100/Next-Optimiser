@@ -1,0 +1,38 @@
+---
+title: Config API
+description: Configuration loader and default values reference.
+---
+
+# Config API
+
+```typescript
+import { configLoader, DEFAULT_CONFIG } from 'next-optimize';
+
+const config = await configLoader.load(projectRoot);
+```
+
+## Config Interface
+
+```typescript
+interface Config {
+  bundleSizeWarning: number;      // default: 512000 (500 KB)
+  bundleSizeCritical: number;     // default: 1048576 (1 MB)
+  componentLocLimit: number;        // default: 500
+  hookCountLimit: number;           // default: 20
+  imageSizeLimit: number;           // default: 512000 (500 KB)
+  propDrillLimit: number;           // default: 4
+  ignoredPaths: string[];
+  plugins: string[];
+  outputFormats: ('console' | 'json' | 'html' | 'markdown' | 'sarif')[];
+}
+```
+
+## Config File Resolution
+
+Searched in order:
+1. `next-optimize.config.ts`
+2. `next-optimize.config.js`
+3. `next-optimize.config.mjs`
+4. `next-optimize.config.json`
+
+Falls back to `DEFAULT_CONFIG` if none found.

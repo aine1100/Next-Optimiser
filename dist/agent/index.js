@@ -62,7 +62,6 @@ class NextOptimizeAgent {
         };
     }
     setupPerformanceObserver() {
-        // Observe Layout Shifts, Long Tasks, and Paints
         try {
             const observer = new PerformanceObserver((list) => {
                 list.getEntries().forEach((entry) => {
@@ -70,14 +69,34 @@ class NextOptimizeAgent {
                         this.send('event', {
                             name: 'long-task',
                             duration: entry.duration,
-                            startTime: entry.startTime
+                            startTime: entry.startTime,
+                        });
+                    }
+                    if (entry.entryType === 'layout-shift' && !entry.hadRecentInput) {
+                        this.send('event', {
+                            name: 'cls',
+                            value: entry.value,
+                            startTime: entry.startTime,
+                        });
+                    }
+                    if (entry.entryType === 'largest-contentful-paint') {
+                        this.send('event', {
+                            name: 'lcp',
+                            duration: entry.startTime,
+                            size: entry.size,
+                        });
+                    }
+                    if (entry.entryType === 'paint' && entry.name === 'first-contentful-paint') {
+                        this.send('event', {
+                            name: 'fcp',
+                            duration: entry.startTime,
                         });
                     }
                 });
             });
             observer.observe({ entryTypes: ['longtask', 'layout-shift', 'paint', 'largest-contentful-paint'] });
         }
-        catch (e) {
+        catch (_e) {
             // Browser support check
         }
     }

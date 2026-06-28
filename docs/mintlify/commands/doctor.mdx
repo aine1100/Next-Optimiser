@@ -1,0 +1,36 @@
+---
+title: doctor
+description: Quick health check for your project setup.
+icon: stethoscope
+---
+
+# doctor
+
+Check project health and configuration prerequisites.
+
+```bash
+next-optimize doctor
+```
+
+## Checks Performed
+
+| Check | What It Verifies |
+|-------|-----------------|
+| Node Version | Node.js is available |
+| Package JSON | `package.json` exists |
+| Next Config | `next.config.js` or `.mjs` exists |
+| Build Directory | `.next` or `dist` exists |
+
+## Example Output
+
+```
+PROJECT HEALTH CHECK
+====================
+
+✔ Node Version: Found (v20.11.0)
+✔ Package JSON: Found
+✔ Next Config: Found
+⚠ Build Directory: Not Found
+```
+
+Run `npm run build` if the build directory is missing — bundle analysis requires build output.

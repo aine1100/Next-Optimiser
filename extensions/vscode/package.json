@@ -1,0 +1,49 @@
+{
+  "name": "next-optimize",
+  "displayName": "Next Optimize",
+  "description": "Performance analysis and diagnostics for React and Next.js",
+  "version": "1.0.0",
+  "publisher": "next-optimize",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Linters", "Other"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "next-optimize.analyze",
+        "title": "Next Optimize: Analyze Workspace"
+      },
+      {
+        "command": "next-optimize.showScore",
+        "title": "Next Optimize: Show Performance Score"
+      }
+    ],
+    "configuration": {
+      "title": "Next Optimize",
+      "properties": {
+        "nextOptimize.enableDiagnostics": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show performance diagnostics inline"
+        },
+        "nextOptimize.severity": {
+          "type": "string",
+          "enum": ["critical", "high", "medium", "low"],
+          "default": "medium",
+          "description": "Minimum severity to show as diagnostics"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.3.3"
+  }
+}

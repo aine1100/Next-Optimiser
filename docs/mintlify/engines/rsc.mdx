@@ -1,0 +1,32 @@
+---
+title: RSC Engine
+description: React Server Components boundary analysis for Next.js App Router.
+---
+
+# RSC Engine
+
+Analyzes React Server Components patterns in Next.js App Router (`app/` directory).
+
+## Checks
+
+| Rule | Severity | Description |
+|------|----------|-------------|
+| Missing "use client" | high | Hooks/browser APIs without directive |
+| Async Client Component | critical | `async` function in "use client" file |
+| Server API in Client | critical | `next/headers`, `next/cookies` in client file |
+
+## Example
+
+```tsx
+// ❌ Flagged — hooks without "use client"
+import { useState } from 'react';
+export function Counter() {
+  const [n, setN] = useState(0);
+  return <button onClick={() => setN(n + 1)}>{n}</button>;
+}
+
+// ✅ Fixed
+"use client";
+import { useState } from 'react';
+export function Counter() { ... }
+```

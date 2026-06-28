@@ -4,15 +4,17 @@ A production-grade, enterprise-ready developer CLI tool for analyzing, monitorin
 
 ## 🚀 Features
 
-- **Static Code Analysis**: Detects anti-patterns using deep AST parsing (via ts-morph).
-- **Bundle Analysis**: Monitors build output sizes and chunk distributions.
-- **Real-time Monitoring**: Injected browser agent for live telemetry (API, Rerenders, Memory).
-- **Dependency Audit**: Identifies heavy, duplicated, or legacy dependencies.
-- **Performance Scoring**: Weighted 0–100 score across 8 critical categories.
-- **Actionable Recommendations**: Prioritized suggestions sorted by impact and effort.
-- **CI/CD Integration**: Fail builds on performance regressions with customized thresholds.
-- **Rich Reporting**: Beautiful Console, JSON, and high-fidelity HTML reports.
-- **Plugin System**: Extensible architecture for custom rules and scanners.
+- **14 Analysis Engines**: Bundle, Component, Render, RSC, Web Vitals, Memory, Image, API, Build, Dependency, Monorepo, Framework
+- **Static Code Analysis**: Deep AST parsing via ts-morph for anti-patterns
+- **Real-time Monitoring**: Browser agent + live HTTP dashboard at `localhost:3006`
+- **Performance Scoring**: Weighted 0–100 score across 8 categories
+- **CI/CD Integration**: Threshold gates, baseline regression diffing, SARIF output
+- **Rich Reporting**: Console, HTML, JSON, Markdown, and SARIF
+- **Auto-Optimize**: Safe codemods (`<img>` → `next/image`)
+- **AI Fix Suggestions**: Before/after code snippets for detected issues
+- **Monorepo Support**: Scan all workspace packages with `--workspace`
+- **VS Code Extension**: Inline diagnostics and one-click analysis
+- **Plugin System**: Extensible custom rules
 
 ## 📦 Installation
 
@@ -22,103 +24,46 @@ npm install -g next-optimize
 npx next-optimize analyze
 ```
 
-## 🛠 Usage
+## 🛠 Commands
 
-### Analyze a project
-Runs a comprehensive suite of static and build analysis.
 ```bash
-npx next-optimize analyze
-```
-
-### Start Real-time Monitoring
-Starts a local WebSocket server to receive metrics from the browser agent.
-```bash
-npx next-optimize monitor
-```
-
-### Run in CI Mode
-Exit with code 1 if the performance score falls below the threshold.
-```bash
-npx next-optimize ci --threshold 80
-```
-
-### Check Project Health
-```bash
-npx next-optimize doctor
+npx next-optimize analyze              # Full analysis
+npx next-optimize analyze --workspace  # Monorepo scan
+npx next-optimize analyze --runtime    # Correlate with live metrics
+npx next-optimize monitor              # WebSocket + live dashboard
+npx next-optimize ci --threshold 80 --baseline  # CI with regression check
+npx next-optimize baseline save        # Save performance baseline
+npx next-optimize suggest -o FIXES.md    # AI-assisted fix suggestions
+npx next-optimize optimize --dry-run   # Preview auto-fixes
+npx next-optimize doctor               # Health check
 ```
 
 ## ⚙️ Configuration
 
-Create a `next-optimize.config.ts` in your project root:
-
 ```typescript
+// next-optimize.config.ts
 export default {
   bundleSizeWarning: 500000,
   componentLocLimit: 500,
-  outputFormats: ['console', 'html']
+  propDrillLimit: 4,
+  outputFormats: ['console', 'html', 'json', 'markdown', 'sarif'],
+  plugins: ['./plugins/my-plugin.js'],
 };
 ```
 
-## 🕵️ Real-time Agent Injection
+## 📚 Documentation
 
-For real-time monitoring, include the agent in your application's entry point (e.g., `_app.tsx` or `index.tsx`):
+Full documentation powered by [Mintlify](https://mintlify.com):
 
-```typescript
-import '@next-optimize/agent'; // If installed as package
-// OR inject the script via CDN/CLI
+```bash
+npm run docs   # Local docs at http://localhost:3000
 ```
 
-## 🏗 System Architecture
-
-The **Next Optimize Platform** is architected for maximum modularity, enabling seamless integration of static and dynamic analysis.
-
-### 1. Environment Detection (`Detector`)
-The platform first fingerprints your project's technology stack:
-- **Frameworks**: Next.js, React, Vite, Remix.
-- **Build Tools**: Webpack, Turbopack, Rollup.
-- **Runtimes**: Node.js version and environment variables.
-
-### 2. Analysis Lifecycle (`Scanner`)
-Once detected, the scanner orchestrates a suite of specialized engines:
-- **Core Orchestrator**: Manages engine registration and parallel execution.
-- **Plugin Manager**: Dynamically loads external rules from `next-optimize.config.ts`.
-- **Global Scorer**: Computes a category-weighted performance index based on issue severity.
-
-### 3. Real-time Telemetry (`Agent` + `Server`)
-Bridge the gap between code and reality:
-- **Instrumentation**: The `@next-optimize/agent` hooks into `window.fetch` and `PerformanceObserver`.
-- **Ingestion**: A local WebSocket server receives live metrics for immediate CLI visualization.
-- **Tracing**: Native support for React Component render tracing via a specialized helper.
-
----
-
-## 🛠 Features Breakdown
-
-### 📊 Performance Analytics
-- **Dynamic Scoring**: Categorized results for Bundle, Dependency, Component, Render, Memory, Image, API, and Build.
-- **Prioritization Engine**: Recommendations are automatically sorted by **Impact** (High/Medium/Low) and **Effort** (High/Medium/Low).
-
-### 🔍 Deep Static Inspection
-- **AST Pattern Discovery**: Uses `ts-morph` to identify missing `memo()`, prop-drilling, and improper `useEffect` cleanups.
-- **Dependency Audit**: Flags heavy libraries (e.g., `moment`) and suggests modern alternatives (`date-fns`).
-
-### 🤖 CI/CD Guardrails
-- **Automated Gates**: Fail builds based on precise performance thresholds.
-- **Multi-format Reporting**: Generate artifacts for reviewers in HTML, JSON, or standard Markdown.
-
----
-
-## 📚 Documentation Hub
-
-For detailed technical guides, please refer to:
-- [**Architecture Overview**](./docs/ARCHITECTURE.md): Internals, lifecycle, and data flow.
-- [**Plugin Development**](./docs/PLUGINS.md): Extending the platform with custom rules.
-- [**CI/CD Integration**](./docs/CI_CD.md): Automated performance audits in pipelines.
-- [**Contributing Guidelines**](./CONTRIBUTING.md): How to get involved.
-
-## 🤝 Contributing
-
-We welcome contributions from the community! Please see our [**Contributing Guide**](./CONTRIBUTING.md) for more details.
+- [**Mintlify Docs**](./docs/mintlify/introduction.mdx) — Full platform documentation
+- [**Architecture**](./docs/ARCHITECTURE.md) — Internals and data flow
+- [**Plugins**](./docs/PLUGINS.md) — Custom rule development
+- [**CI/CD**](./docs/CI_CD.md) — Pipeline integration
 
 ## 📄 License
+
 MIT

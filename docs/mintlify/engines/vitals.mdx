@@ -1,0 +1,28 @@
+---
+title: Web Vitals Engine
+description: Static checks for Core Web Vitals optimization opportunities.
+---
+
+# Web Vitals Engine
+
+Static analysis for LCP, CLS, and FCP optimization opportunities.
+
+## Checks
+
+| Rule | Vital | Description |
+|------|-------|-------------|
+| Missing Lazy Loading | LCP | `<img>` without `loading="lazy"` |
+| document.write() | CLS | Causes layout shifts |
+| Multiple Font Imports | CLS | 3+ font imports in one file |
+| Fixed Dimensions | CLS | Inline width/height without min-height |
+
+## Runtime Vitals
+
+The browser agent also captures live Web Vitals:
+
+- **LCP** — Largest Contentful Paint
+- **CLS** — Cumulative Layout Shift
+- **FCP** — First Contentful Paint
+- **Long Tasks** — Main thread blocking >50ms
+
+View these on the live dashboard at `http://localhost:3006/dashboard`.

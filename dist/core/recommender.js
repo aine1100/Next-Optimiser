@@ -1,4 +1,11 @@
+/**
+ * Generates actionable performance recommendations from detected issues.
+ */
 export class Recommender {
+    /**
+     * Evaluates detected issues and outputs prioritized recommendations.
+     * @param issues A collection of issues found across all categories.
+     */
     static generate(issues) {
         // Collect all unique recommendations from issues
         const recommendations = [];

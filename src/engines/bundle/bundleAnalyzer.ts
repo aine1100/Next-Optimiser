@@ -2,6 +2,7 @@ import path from 'path';
 import { AnalysisEngine } from '../../core/analyzer.js';
 import { Issue, ProjectInfo } from '../../types/index.js';
 import { findFiles, getFileSize, formatSize } from '../../utils/fileUtils.js';
+import { getIgnoreGlobs } from '../../utils/scanUtils.js';
 
 /**
  * Analyzes build artifacts and source code to identify bundle size issues.
@@ -24,7 +25,7 @@ export class BundleAnalyzer extends AnalysisEngine {
 
     for (const dir of buildDirs) {
       const dirPath = path.join(project.rootPath, dir);
-      const jsFiles = await findFiles('**/*.js', dirPath, ['node_modules/**']);
+      const jsFiles = await findFiles('**/*.js', dirPath, getIgnoreGlobs(this.config));
 
       if (jsFiles.length > 0) {
         foundBundles = true;

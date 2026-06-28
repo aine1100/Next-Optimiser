@@ -1,6 +1,9 @@
 import path from 'path';
 import { AnalysisEngine } from '../../core/analyzer.js';
 import { readJsonSafe } from '../../utils/fileUtils.js';
+/**
+ * Analyzes package.json to identify large, outdated, or duplicate dependencies.
+ */
 export class DependencyAnalyzer extends AnalysisEngine {
     name = 'Dependency';
     HEAVY_PACKAGES = {
@@ -9,6 +12,9 @@ export class DependencyAnalyzer extends AnalysisEngine {
         'axios': 'fetch api',
         'jquery': 'native dom api',
     };
+    /**
+     * Applicable to any project with a package.json.
+     */
     isApplicable(project) {
         return project.packageManager !== 'unknown';
     }

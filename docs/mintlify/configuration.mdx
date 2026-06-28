@@ -1,0 +1,93 @@
+---
+title: Configuration
+description: Customize Next Optimize thresholds, paths, plugins, and output formats.
+icon: gear
+---
+
+# Configuration
+
+Create a `next-optimize.config.ts` (or `.js`, `.mjs`, `.json`) in your project root.
+
+## Full Example
+
+```typescript
+import { Config } from 'next-optimize';
+
+const config: Partial<Config> = {
+  // Bundle thresholds
+  bundleSizeWarning: 500 * 1024,    // 500 KB
+  bundleSizeCritical: 1000 * 1024,  // 1 MB
+
+  // Component limits
+  componentLocLimit: 500,             // max lines per component
+  hookCountLimit: 20,                 // max hooks per component
+  propDrillLimit: 4,                  // prop forwarding threshold
+
+  // Image limits
+  imageSizeLimit: 500 * 1024,         // 500 KB
+
+  // Paths to ignore during scanning
+  ignoredPaths: [
+    'node_modules',
+    '.next',
+    'dist',
+    'build',
+    '.git',
+    'public/static',
+  ],
+
+  // Custom plugins
+  plugins: [
+    './plugins/my-custom-plugin.js',
+  ],
+
+  // Output formats
+  outputFormats: ['console', 'html', 'json', 'markdown', 'sarif'],
+};
+
+export default config;
+```
+
+## Options Reference
+
+<ParamField path="bundleSizeWarning" type="number" default="512000">
+  Bundle size in bytes that triggers a warning.
+</ParamField>
+
+<ParamField path="bundleSizeCritical" type="number" default="1048576">
+  Bundle size in bytes that triggers a critical issue.
+</ParamField>
+
+<ParamField path="componentLocLimit" type="number" default="500">
+  Maximum lines of code before a component is flagged.
+</ParamField>
+
+<ParamField path="hookCountLimit" type="number" default="20">
+  Maximum React hooks per component.
+</ParamField>
+
+<ParamField path="propDrillLimit" type="number" default="4">
+  Number of prop forwards before flagging prop drilling.
+</ParamField>
+
+<ParamField path="imageSizeLimit" type="number" default="512000">
+  Maximum image asset size in bytes.
+</ParamField>
+
+<ParamField path="ignoredPaths" type="string[]">
+  Directories to exclude from source scanning.
+</ParamField>
+
+<ParamField path="plugins" type="string[]">
+  Paths to custom plugin modules.
+</ParamField>
+
+<ParamField path="outputFormats" type="string[]">
+  Report formats: `console`, `html`, `json`, `markdown`, `sarif`.
+</ParamField>
+
+## View Current Config
+
+```bash
+next-optimize config
+```

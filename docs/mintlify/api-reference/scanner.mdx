@@ -1,0 +1,69 @@
+---
+title: Scanner API
+description: Programmatic API for running performance analysis.
+---
+
+# Scanner API
+
+Use Next Optimize as a library in your own tools.
+
+## Installation
+
+```bash
+npm install next-optimize
+```
+
+## Basic Usage
+
+```typescript
+import { createScanner, configLoader } from 'next-optimize';
+
+const config = await configLoader.load('/path/to/project');
+const scanner = createScanner(config);
+const result = await scanner.scan('/path/to/project');
+
+console.log(result.score.overall);  // 85
+console.log(result.issues.length);  // 12
+```
+
+## Custom Engine Registration
+
+```typescript
+import { Scanner, AnalysisEngine, registerDefaultEngines } from 'next-optimize';
+
+class MyEngine extends AnalysisEngine {
+  name = 'My Custom Engine';
+  isApplicable() { return true; }
+  async analyze(project) {
+    return [this.createIssue('rule-1', 'Title', 'Desc', 'medium', 'build')];
+  }
+}
+
+const scanner = new Scanner(config);
+registerDefaultEngines(scanner, config);
+scanner.registerEngine(new MyEngine(config));
+
+const result = await scanner.scan(projectRoot);
+```
+
+## Baseline API
+
+```typescript
+import { BaselineManager } from 'next-optimize';
+
+const baseline = new BaselineManager(projectRoot);
+await baseline.save(result);
+
+const saved = await baseline.load();
+const diff = baseline.diff(currentResult, saved!);
+console.log(diff.scoreDelta, diff.newIssues);
+```
+
+## Fix Suggestions API
+
+```typescript
+import { FixSuggester } from 'next-optimize';
+
+const suggestions = FixSuggester.suggest(result.issues);
+const markdown = FixSuggester.formatAsMarkdown(suggestions);
+```

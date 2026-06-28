@@ -1,0 +1,63 @@
+---
+title: Installation
+description: Install Next Optimize globally, per-project, or as a dev dependency.
+icon: download
+---
+
+# Installation
+
+## Global Install
+
+```bash
+npm install -g next-optimize
+next-optimize analyze
+```
+
+## Per-Project (Recommended for CI)
+
+```bash
+npm install --save-dev next-optimize
+```
+
+Add to `package.json` scripts:
+
+```json
+{
+  "scripts": {
+    "perf": "next-optimize analyze",
+    "perf:ci": "next-optimize ci --threshold 80 --baseline"
+  }
+}
+```
+
+## npx (No Install)
+
+```bash
+npx next-optimize analyze
+```
+
+## VS Code Extension
+
+```bash
+cd extensions/vscode
+npm install
+npm run compile
+```
+
+Then install from VSIX or run in Extension Development Host.
+
+## Mintlify Docs (Local)
+
+```bash
+npx mintlify dev
+# Runs at http://localhost:3000
+```
+
+Run from the `docs/mintlify` directory.
+
+## Verify Installation
+
+```bash
+next-optimize --version
+next-optimize doctor
+```

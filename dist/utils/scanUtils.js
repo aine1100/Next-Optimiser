@@ -1,0 +1,21 @@
+import { findFiles } from './fileUtils.js';
+export const SOURCE_DIRS = ['src', 'app', 'pages', 'components'];
+export const SOURCE_GLOB_PATTERNS = SOURCE_DIRS.map((dir) => `${dir}/**/*.{ts,tsx,js,jsx}`);
+/**
+ * Builds glob ignore patterns from config.ignoredPaths.
+ */
+export function getIgnoreGlobs(config) {
+    return config.ignoredPaths.map((p) => `${p}/**`);
+}
+/**
+ * Discovers React/Next source files across common directory layouts.
+ */
+export async function findSourceFiles(rootPath, config) {
+    const ignore = getIgnoreGlobs(config);
+    const files = new Set();
+    for (const pattern of SOURCE_GLOB_PATTERNS) {
+        const found = await findFiles(pattern, rootPath, ignore);
+        found.forEach((f) => files.add(f));
+    }
+    return [...files];
+}

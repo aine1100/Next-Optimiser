@@ -15,6 +15,9 @@ const config: Partial<Config> = {
   
   // Image size limit (default: 500KB)
   imageSizeLimit: 500 * 1024,
+
+  // Prop forwarding count before flagging prop drilling (default: 4)
+  propDrillLimit: 4,
   
   // Paths to ignore during scanning
   ignoredPaths: [
@@ -32,7 +35,7 @@ const config: Partial<Config> = {
   ],
   
   // Output formats for analysis reports
-  outputFormats: ['console', 'html', 'json']
+  outputFormats: ['console', 'html', 'json', 'markdown', 'sarif']
 };
 
 export default config;

@@ -1,0 +1,47 @@
+---
+title: Monorepo Guide
+description: Analyze Turborepo, pnpm workspaces, and npm workspaces.
+---
+
+# Monorepo Support
+
+Next Optimize detects and analyzes monorepo workspaces automatically.
+
+## Supported Formats
+
+- **npm/yarn workspaces** — `workspaces` field in root `package.json`
+- **pnpm** — `pnpm-workspace.yaml`
+
+## Analyze All Packages
+
+```bash
+next-optimize analyze --workspace
+```
+
+Runs a full analysis on each workspace package and generates per-package reports.
+
+## What Gets Checked
+
+- Duplicate dependency versions across packages
+- Missing build scripts in React packages
+- Per-package performance scores
+
+## Example: pnpm Monorepo
+
+```
+my-monorepo/
+├── pnpm-workspace.yaml
+├── apps/
+│   ├── web/          ← analyzed
+│   └── admin/        ← analyzed
+└── packages/
+    ├── ui/           ← analyzed
+    └── utils/        ← analyzed
+```
+
+## CI for Monorepos
+
+```yaml
+- name: Performance Audit
+  run: npx next-optimize analyze --workspace
+```

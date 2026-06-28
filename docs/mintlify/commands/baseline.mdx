@@ -1,0 +1,57 @@
+---
+title: baseline
+description: Save, view, and diff performance baselines for regression detection.
+icon: chart-simple
+---
+
+# baseline
+
+Manage performance baselines stored in `.next-optimize-baseline.json`.
+
+```bash
+next-optimize baseline <action>
+```
+
+## Actions
+
+### save
+
+Save current analysis as baseline:
+
+```bash
+next-optimize baseline save
+```
+
+### show
+
+Display saved baseline summary:
+
+```bash
+next-optimize baseline show
+```
+
+### diff
+
+Compare current analysis against baseline:
+
+```bash
+next-optimize baseline diff
+```
+
+## Regression Detection
+
+The diff reports:
+- **Score delta** — overall score change
+- **New issues** — problems that didn't exist before
+- **Resolved issues** — problems that were fixed
+- **Regressed categories** — categories that dropped by 5+ points
+
+## CI Integration
+
+```bash
+# First run — establish baseline
+next-optimize baseline save
+
+# Subsequent CI runs
+next-optimize ci --baseline --save-baseline
+```

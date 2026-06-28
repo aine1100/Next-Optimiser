@@ -1,0 +1,31 @@
+---
+title: Render Engine
+description: Catches re-render anti-patterns in JSX and React components.
+---
+
+# Render Engine
+
+AST-based analysis of JSX patterns that cause unnecessary re-renders.
+
+## Checks
+
+| Rule | Severity | Description |
+|------|----------|-------------|
+| Inline Function Prop | medium | `onClick={() => ...}` in JSX |
+| Inline Object/Array Prop | medium | `style={{...}}` in JSX |
+| Missing Key | high | `.map()` without `key` prop |
+| Index as Key | high | `key={index}` in lists |
+| Unmemoized in List | medium | Component in `.map()` without `React.memo` |
+| Prop Drilling | medium | Prop forwarded `propDrillLimit`+ times |
+
+## Example
+
+```tsx
+// ❌ Flagged
+{items.map((item, i) => <Card key={i} onClick={() => select(item)} />)}
+
+// ✅ Fixed
+{items.map((item) => (
+  <MemoCard key={item.id} onClick={handleSelect} itemId={item.id} />
+))}
+```

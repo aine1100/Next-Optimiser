@@ -1,0 +1,73 @@
+---
+title: Types
+description: Core TypeScript type definitions.
+---
+
+# Types
+
+## AnalysisResult
+
+```typescript
+interface AnalysisResult {
+  timestamp: string;
+  project: ProjectInfo;
+  issues: Issue[];
+  score: PerformanceScore;
+  recommendations: Recommendation[];
+}
+```
+
+## ProjectInfo
+
+```typescript
+interface ProjectInfo {
+  framework: 'next' | 'react' | 'vite' | 'remix' | 'express' | 'unknown';
+  version?: string;
+  buildTool: 'webpack' | 'turbopack' | 'vite' | 'rollup' | 'unknown';
+  packageManager: 'npm' | 'yarn' | 'pnpm' | 'unknown';
+  nodeVersion: string;
+  rootPath: string;
+}
+```
+
+## PerformanceScore
+
+```typescript
+interface PerformanceScore {
+  overall: number;
+  categories: {
+    bundle: number;
+    dependency: number;
+    component: number;
+    render: number;
+    memory: number;
+    image: number;
+    api: number;
+    build: number;
+  };
+}
+```
+
+## Recommendation
+
+```typescript
+interface Recommendation {
+  issueId: string;
+  action: string;
+  effort: 'low' | 'medium' | 'high';
+  impact: 'low' | 'medium' | 'high';
+  link?: string;
+}
+```
+
+## RegressionDiff
+
+```typescript
+interface RegressionDiff {
+  scoreDelta: number;
+  newIssues: Issue[];
+  resolvedIssues: Issue[];
+  regressedCategories: string[];
+  passed: boolean;
+}
+```

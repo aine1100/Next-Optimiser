@@ -1,5 +1,6 @@
 import { WebSocketServer } from 'ws';
 import { logger } from '../utils/logger.js';
+import { metricsStore } from './metricsStore.js';
 export class MetricsServer {
     wss = null;
     port;
@@ -16,6 +17,7 @@ export class MetricsServer {
             ws.on('message', (message) => {
                 try {
                     const entry = JSON.parse(message.toString());
+                    metricsStore.add(entry);
                     this.handleMetric(entry);
                 }
                 catch (e) {
@@ -29,19 +31,24 @@ export class MetricsServer {
         });
     }
     handleMetric(entry) {
-        // Log real-time metrics to terminal in a condensed format
         switch (entry.type) {
             case 'render':
-                if (entry.data.duration > 16) { // > 1 frame
+                if (entry.data.duration > 16) {
                     logger.warn(`[Runtime] Slow Render: <${entry.data.component}> took ${entry.data.duration.toFixed(2)}ms`);
                 }
                 break;
             case 'api':
                 logger.info(`[Runtime] API Call: ${entry.data.url} - ${entry.data.duration.toFixed(0)}ms (${entry.data.status})`);
                 break;
-            case 'memory':
+            case 'memory': {
                 const heapMb = (entry.data.heapUsed / 1024 / 1024).toFixed(2);
                 logger.debug(`[Runtime] Heap Usage: ${heapMb} MB`);
+                break;
+            }
+            case 'event':
+                if (entry.data.name === 'long-task') {
+                    logger.warn(`[Runtime] Long Task: ${entry.data.duration.toFixed(0)}ms`);
+                }
                 break;
         }
     }

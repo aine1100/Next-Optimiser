@@ -10,6 +10,7 @@ export const DEFAULT_CONFIG: Config = {
   componentLocLimit: DEFAULT_THRESHOLDS.COMPONENT_LOC_LIMIT,
   hookCountLimit: DEFAULT_THRESHOLDS.HOOK_COUNT_LIMIT,
   imageSizeLimit: DEFAULT_THRESHOLDS.IMAGE_SIZE_LIMIT,
+  propDrillLimit: DEFAULT_THRESHOLDS.PROP_DRILL_LIMIT,
   ignoredPaths: ['node_modules', '.next', 'dist', 'build', '.git'],
   plugins: [],
   outputFormats: ['console', 'html'],

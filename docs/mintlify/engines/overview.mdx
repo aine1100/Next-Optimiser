@@ -1,0 +1,50 @@
+---
+title: Engines Overview
+description: All 14 built-in analysis engines and what they check.
+icon: engine
+---
+
+# Analysis Engines
+
+Next Optimize includes 14 specialized engines, each focusing on a single performance category.
+
+## Engine List
+
+| Engine | Category | Frameworks | What It Checks |
+|--------|----------|------------|----------------|
+| **Bundle** | bundle | All | JS file sizes in build output |
+| **Dependency** | dependency | All | Heavy packages, duplicates |
+| **Dependency Depth** | dependency | All | Size estimates, similar packages |
+| **Component** | component | React/Next | Large components, excessive hooks |
+| **Render** | render | React/Next | Inline props, keys, memo, prop drilling |
+| **RSC** | render | Next.js | "use client" boundaries, server APIs |
+| **Web Vitals** | render/image | All | LCP, CLS, FCP static hints |
+| **Memory** | memory | React/Next | Missing useEffect cleanup |
+| **Image** | image | All | Large assets, legacy formats, `<img>` |
+| **API** | api | All | Missing error handling, raw fetch |
+| **Build** | build | All | Missing build script, config |
+| **Monorepo** | build | All | Workspace detection, version conflicts |
+| **Framework** | build/api | Remix/Vite/Express/Next | Framework-specific checks |
+
+## Scoring Weights
+
+| Category | Weight |
+|----------|--------|
+| Bundle | 25% |
+| Render | 20% |
+| Dependency | 15% |
+| Component | 10% |
+| Memory | 10% |
+| Image | 10% |
+| API | 5% |
+| Build | 5% |
+
+## Severity Deductions
+
+| Severity | Points Deducted |
+|----------|----------------|
+| Critical | −40 |
+| High | −25 |
+| Medium | −15 |
+| Low | −5 |
+| Info | 0 |

@@ -1,6 +1,7 @@
 import path from 'path';
 import { AnalysisEngine } from '../../core/analyzer.js';
 import { findFiles, getFileSize, formatSize } from '../../utils/fileUtils.js';
+import { findSourceFiles } from '../../utils/scanUtils.js';
 import { Project, SyntaxKind } from 'ts-morph';
 export class ImageAnalyzer extends AnalysisEngine {
     name = 'Image';
@@ -22,7 +23,7 @@ export class ImageAnalyzer extends AnalysisEngine {
         }
         // Next.js specific check for <img> instead of <Image />
         if (project.framework === 'next') {
-            const tsFiles = await findFiles('src/**/*.{ts,tsx,js,jsx}', project.rootPath, ['node_modules/**', '.next/**']);
+            const tsFiles = await findSourceFiles(project.rootPath, this.config);
             const morphProject = new Project();
             morphProject.addSourceFilesAtPaths(tsFiles);
             for (const sourceFile of morphProject.getSourceFiles()) {

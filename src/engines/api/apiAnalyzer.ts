@@ -3,6 +3,7 @@ import { AnalysisEngine } from '../../core/analyzer.js';
 import { Issue, ProjectInfo } from '../../types/index.js';
 import { Project, SyntaxKind } from 'ts-morph';
 import { findFiles } from '../../utils/fileUtils.js';
+import { findSourceFiles } from '../../utils/scanUtils.js';
 
 export class ApiAnalyzer extends AnalysisEngine {
   public name = 'API';
@@ -13,7 +14,7 @@ export class ApiAnalyzer extends AnalysisEngine {
 
   public async analyze(project: ProjectInfo): Promise<Issue[]> {
     const issues: Issue[] = [];
-    const tsFiles = await findFiles('src/**/*.{ts,tsx,js,jsx}', project.rootPath, ['node_modules/**', '.next/**']);
+    const tsFiles = await findSourceFiles(project.rootPath, this.config);
     
     const morphProject = new Project();
     morphProject.addSourceFilesAtPaths(tsFiles);

@@ -1,0 +1,102 @@
+---
+title: Quickstart
+description: Get up and running with Next Optimize in under 5 minutes.
+icon: bolt
+---
+
+# Quickstart
+
+Get your first performance report in under 5 minutes.
+
+## Prerequisites
+
+- Node.js 18+
+- A React or Next.js project
+
+## Step 1: Install
+
+```bash
+npm install -g next-optimize
+```
+
+Or run without installing:
+
+```bash
+npx next-optimize analyze
+```
+
+## Step 2: Run Your First Analysis
+
+```bash
+cd your-nextjs-app
+npx next-optimize analyze
+```
+
+You'll see output like:
+
+```
+PERFORMANCE ANALYSIS STARTED
+============================
+
+✔ Project Detected: next 14.0.0 (webpack)
+✔ Bundle analysis complete: 2 issues found
+✔ Render analysis complete: 5 issues found
+...
+
+OVERALL PERFORMANCE SCORE: 72/100 - Good
+```
+
+An HTML report is generated at `next-optimize-report.html`.
+
+## Step 3: Configure (Optional)
+
+Create `next-optimize.config.ts` in your project root:
+
+```typescript
+export default {
+  bundleSizeWarning: 500 * 1024,
+  componentLocLimit: 300,
+  outputFormats: ['console', 'html', 'markdown', 'sarif'],
+  plugins: [],
+};
+```
+
+## Step 4: Set Up CI
+
+```bash
+# Save a baseline
+npx next-optimize baseline save
+
+# In CI — fail on regression
+npx next-optimize ci --threshold 70 --baseline
+```
+
+## Step 5: Live Monitoring (Optional)
+
+```bash
+# Terminal 1: Start monitor + dashboard
+npx next-optimize monitor
+
+# Open dashboard
+open http://localhost:3006/dashboard
+
+# Your app: inject the agent
+# <script src="node_modules/next-optimize/dist/agent/agent.js"></script>
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Configuration" icon="gear" href="/configuration">
+    Customize thresholds and output formats.
+  </Card>
+  <Card title="CI/CD Guide" icon="code-branch" href="/guides/ci-cd">
+    Integrate into GitHub Actions.
+  </Card>
+  <Card title="Engines" icon="engine" href="/engines/overview">
+    Learn what each analyzer checks.
+  </Card>
+  <Card title="Plugins" icon="puzzle-piece" href="/guides/plugins">
+    Write custom performance rules.
+  </Card>
+</CardGroup>

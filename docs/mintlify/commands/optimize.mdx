@@ -1,0 +1,41 @@
+---
+title: optimize
+description: Apply automatic safe codemods for common performance issues.
+icon: wand-magic-sparkles
+---
+
+# optimize
+
+Apply safe automatic code fixes.
+
+```bash
+next-optimize optimize [options]
+```
+
+## Options
+
+| Flag | Description |
+|------|-------------|
+| `--dry-run` | Preview changes without writing files |
+
+## Supported Codemods
+
+| Codemod | Condition |
+|---------|-----------|
+| `<img>` → `<Image>` | Next.js project, img has src/alt/width/height |
+
+## Examples
+
+```bash
+# Preview changes
+next-optimize optimize --dry-run
+
+# Apply fixes
+next-optimize optimize
+```
+
+For issues that can't be auto-fixed, use:
+
+```bash
+next-optimize suggest -o fixes.md
+```

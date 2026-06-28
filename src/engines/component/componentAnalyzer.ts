@@ -2,7 +2,7 @@ import path from 'path';
 import { Project, SyntaxKind, FunctionDeclaration, ArrowFunction, ClassDeclaration } from 'ts-morph';
 import { AnalysisEngine } from '../../core/analyzer.js';
 import { Issue, ProjectInfo } from '../../types/index.js';
-import { findFiles } from '../../utils/fileUtils.js';
+import { findSourceFiles } from '../../utils/scanUtils.js';
 
 /**
  * Static analyzer for identifying complex or over-sized React components.
@@ -19,7 +19,7 @@ export class ComponentAnalyzer extends AnalysisEngine {
 
   public async analyze(project: ProjectInfo): Promise<Issue[]> {
     const issues: Issue[] = [];
-    const tsFiles = await findFiles('src/**/*.{ts,tsx,js,jsx}', project.rootPath, ['node_modules/**', '.next/**']);
+    const tsFiles = await findSourceFiles(project.rootPath, this.config);
     
     const morphProject = new Project();
     morphProject.addSourceFilesAtPaths(tsFiles);

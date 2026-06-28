@@ -57,9 +57,10 @@ export interface Config {
   componentLocLimit: number;
   hookCountLimit: number;
   imageSizeLimit: number;
+  propDrillLimit: number;
   ignoredPaths: string[];
   plugins: string[];
-  outputFormats: ('console' | 'json' | 'html')[];
+  outputFormats: ('console' | 'json' | 'html' | 'markdown' | 'sarif')[];
 }
 
 export interface PluginInterface {

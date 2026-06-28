@@ -1,5 +1,12 @@
 import { WEIGHTS } from '../utils/constants.js';
+/**
+ * Calculates weighted performance scores for each analysis category.
+ */
 export class Scorer {
+    /**
+     * Computes the aggregated performance score based on severity deductions.
+     * @param issues A list of performance issues detected across all engines.
+     */
     static calculate(issues) {
         const catScores = {
             bundle: 100,

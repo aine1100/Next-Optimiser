@@ -1,0 +1,53 @@
+---
+title: SARIF & GitHub Code Scanning
+description: Upload performance findings as GitHub Code Scanning alerts.
+---
+
+# SARIF & GitHub Code Scanning
+
+Next Optimize generates SARIF 2.1.0 output compatible with GitHub Code Scanning.
+
+## Generate SARIF
+
+```bash
+next-optimize analyze
+# Creates next-optimize-results.sarif
+
+# Or explicitly
+next-optimize report -f sarif
+```
+
+## Enable in Config
+
+```typescript
+export default {
+  outputFormats: ['console', 'html', 'sarif'],
+};
+```
+
+## GitHub Actions Upload
+
+```yaml
+- name: Performance Audit
+  run: npx next-optimize ci --threshold 80
+
+- name: Upload SARIF
+  if: always()
+  uses: github/codeql-action/upload-sarif@v3
+  with:
+    sarif_file: next-optimize-results.sarif
+```
+
+## Severity Mapping
+
+| Next Optimize | SARIF Level |
+|---------------|-------------|
+| critical, high | error |
+| medium | warning |
+| low, info | note |
+
+## Viewing Results
+
+After upload, findings appear in:
+- **Security** → **Code scanning alerts** tab
+- **Pull Request** → **Checks** tab with inline annotations

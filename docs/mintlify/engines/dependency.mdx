@@ -1,0 +1,28 @@
+---
+title: Dependency Engine
+description: Identifies heavy, duplicated, and redundant npm packages.
+---
+
+# Dependency Engine
+
+Two engines analyze your `package.json` dependencies.
+
+## Dependency Analyzer
+
+Flags known heavy packages:
+
+| Package | Alternative | Est. Size |
+|---------|------------|-----------|
+| `moment` | `date-fns`, `dayjs` | ~290 KB |
+| `lodash` | `lodash-es` | ~70 KB |
+| `axios` | `fetch` API | ~15 KB |
+| `jquery` | Native DOM API | ~85 KB |
+
+Also detects duplicate lodash (`lodash` + `lodash-es`).
+
+## Dependency Depth Analyzer
+
+- **Size estimates** for 12+ known large packages
+- **Similar package groups** — e.g., `moment` + `dayjs` installed together
+- **Excessive dependency count** — 100+ total dependencies
+- **Total weight warning** — combined heavy deps exceed ~1 MB

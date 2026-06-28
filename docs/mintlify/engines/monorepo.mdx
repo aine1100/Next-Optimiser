@@ -1,0 +1,30 @@
+---
+title: Monorepo Engine
+description: Workspace detection and cross-package dependency analysis.
+---
+
+# Monorepo Engine
+
+Detects monorepo workspaces and flags cross-package issues.
+
+## Supported Workspaces
+
+- npm/yarn `workspaces` in `package.json`
+- `pnpm-workspace.yaml`
+
+## Checks
+
+| Rule | Description |
+|------|-------------|
+| Monorepo Detected | Info — suggests per-package analysis |
+| Missing Build Script | Workspace package has React but no build |
+| Duplicate Versions | Same dependency at different versions across packages |
+
+## Workspace Scanning
+
+```bash
+# Analyze all packages
+next-optimize analyze --workspace
+```
+
+This runs a full analysis on each workspace package individually.

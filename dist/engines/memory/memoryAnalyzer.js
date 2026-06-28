@@ -1,15 +1,21 @@
 import { AnalysisEngine } from '../../core/analyzer.js';
 import { Project, SyntaxKind } from 'ts-morph';
 import path from 'path';
-import { findFiles } from '../../utils/fileUtils.js';
+import { findSourceFiles } from '../../utils/scanUtils.js';
+/**
+ * Static analyzer for identifying potential memory leaks and missing cleanups.
+ */
 export class MemoryAnalyzer extends AnalysisEngine {
     name = 'Memory';
+    /**
+     * Applicable to React and Next.js projects.
+     */
     isApplicable(project) {
         return project.framework !== 'unknown';
     }
     async analyze(project) {
         const issues = [];
-        const tsFiles = await findFiles('src/**/*.{ts,tsx,js,jsx}', project.rootPath, ['node_modules/**', '.next/**']);
+        const tsFiles = await findSourceFiles(project.rootPath, this.config);
         const morphProject = new Project();
         morphProject.addSourceFilesAtPaths(tsFiles);
         for (const sourceFile of morphProject.getSourceFiles()) {

@@ -1,0 +1,52 @@
+---
+title: ci
+description: Run performance checks in CI with threshold gates and regression detection.
+icon: shield-check
+---
+
+# ci
+
+Run analysis in CI mode. Exits with code `1` on failure.
+
+```bash
+next-optimize ci [options]
+```
+
+## Options
+
+| Flag | Default | Description |
+|------|---------|-------------|
+| `--threshold <score>` | `70` | Minimum score to pass |
+| `--baseline` | — | Compare against saved baseline |
+| `--save-baseline` | — | Save results as new baseline on success |
+
+## GitHub Actions Example
+
+```yaml
+name: Performance Audit
+on: [pull_request]
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm run build
+      - name: Performance Audit
+        run: npx next-optimize ci --threshold 80 --baseline
+      - name: Upload SARIF
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: next-optimize-results.sarif
+```
+
+## Exit Codes
+
+| Code | Meaning |
+|------|---------|
+| `0` | Passed — score meets threshold, no regression |
+| `1` | Failed — below threshold, regression, or error |

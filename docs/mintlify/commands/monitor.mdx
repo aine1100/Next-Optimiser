@@ -1,0 +1,68 @@
+---
+title: monitor
+description: Start real-time performance monitoring with live dashboard.
+icon: tower-broadcast
+---
+
+# monitor
+
+Start a WebSocket server and live HTTP dashboard for browser agent telemetry.
+
+```bash
+next-optimize monitor [options]
+```
+
+## Options
+
+| Flag | Default | Description |
+|------|---------|-------------|
+| `-p, --port` | `3005` | WebSocket server port |
+| `--dashboard-port` | `3006` | HTTP dashboard port |
+
+## Setup
+
+**Terminal 1** — Start the monitor:
+
+```bash
+next-optimize monitor
+```
+
+**Your app** — Inject the agent:
+
+```html
+<script src="node_modules/next-optimize/dist/agent/agent.js"></script>
+```
+
+Or in Next.js `_app.tsx`:
+
+```typescript
+if (process.env.NODE_ENV === 'development') {
+  import('next-optimize/agent');
+}
+```
+
+**Browser** — Open the dashboard:
+
+```
+http://localhost:3006/dashboard
+```
+
+## Metrics Captured
+
+| Metric | Source |
+|--------|--------|
+| API calls | `fetch` interception |
+| Slow renders | `traceRender()` helper |
+| Memory usage | `performance.memory` polling |
+| Long tasks | `PerformanceObserver` |
+| LCP, CLS, FCP | Web Vitals observer |
+
+## Correlate with Static Analysis
+
+```bash
+# Terminal 1
+next-optimize monitor
+
+# Terminal 2 (after using your app)
+next-optimize analyze --runtime
+```

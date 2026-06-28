@@ -1,0 +1,94 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "Next Optimize",
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "favicon": "/favicon.svg",
+  "colors": {
+    "primary": "#3B82F6",
+    "light": "#60A5FA",
+    "dark": "#1D4ED8",
+    "anchors": {
+      "from": "#3B82F6",
+      "to": "#10B981"
+    }
+  },
+  "topbarLinks": [
+    {
+      "name": "GitHub",
+      "url": "https://github.com/next-optimize/next-optimize"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "Get Started",
+    "url": "/quickstart"
+  },
+  "tabs": [
+    {
+      "name": "API Reference",
+      "url": "api-reference"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Getting Started",
+      "pages": [
+        "introduction",
+        "quickstart",
+        "installation",
+        "configuration"
+      ]
+    },
+    {
+      "group": "Commands",
+      "pages": [
+        "commands/analyze",
+        "commands/monitor",
+        "commands/ci",
+        "commands/optimize",
+        "commands/baseline",
+        "commands/suggest",
+        "commands/doctor"
+      ]
+    },
+    {
+      "group": "Analysis Engines",
+      "pages": [
+        "engines/overview",
+        "engines/bundle",
+        "engines/component",
+        "engines/render",
+        "engines/rsc",
+        "engines/vitals",
+        "engines/dependency",
+        "engines/monorepo"
+      ]
+    },
+    {
+      "group": "Guides",
+      "pages": [
+        "guides/architecture",
+        "guides/plugins",
+        "guides/ci-cd",
+        "guides/monorepo",
+        "guides/runtime-monitoring",
+        "guides/vscode-extension",
+        "guides/sarif-github"
+      ]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        "api-reference/scanner",
+        "api-reference/config",
+        "api-reference/plugins",
+        "api-reference/types"
+      ]
+    }
+  ],
+  "footerSocials": {
+    "github": "https://github.com/next-optimize/next-optimize"
+  }
+}

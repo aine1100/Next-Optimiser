@@ -1,0 +1,20 @@
+---
+title: Bundle Engine
+description: Analyzes build output for oversized JavaScript bundles.
+---
+
+# Bundle Engine
+
+Scans `.next`, `dist`, `build`, and `out` directories for oversized `.js` files.
+
+## Checks
+
+- **Critical Bundle Size** — JS file exceeds `bundleSizeCritical` (default 1 MB)
+- **Large Bundle Warning** — JS file exceeds `bundleSizeWarning` (default 500 KB)
+- **No Build Output** — No build directory found
+
+## Suggestions
+
+- Implement dynamic imports (`React.lazy`, `next/dynamic`)
+- Split large components into separate chunks
+- Run `npm run build` before analyzing

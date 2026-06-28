@@ -1,0 +1,68 @@
+---
+title: Plugin Development
+description: Create custom performance rules and extend the analysis platform.
+---
+
+# Plugin Development
+
+Create custom plugins to add proprietary rules or integrate internal APIs.
+
+## Plugin Interface
+
+```typescript
+import { PluginInterface, Config, ProjectInfo, Issue } from 'next-optimize';
+
+const myPlugin: PluginInterface = {
+  name: 'my-custom-plugin',
+  version: '1.0.0',
+
+  async initialize(config: Config) {
+    // Optional setup
+  },
+
+  async analyze(project: ProjectInfo): Promise<Issue[]> {
+    const issues: Issue[] = [];
+
+    if (project.framework === 'next') {
+      issues.push({
+        id: 'my-plugin-custom-rule',
+        title: 'Custom Rule Triggered',
+        description: 'Your custom check found an issue.',
+        severity: 'medium',
+        category: 'build',
+        suggestion: 'Fix it by doing X.',
+      });
+    }
+
+    return issues;
+  },
+};
+
+export default myPlugin;
+```
+
+## Register a Plugin
+
+```typescript
+// next-optimize.config.ts
+export default {
+  plugins: [
+    './plugins/my-custom-plugin.js',
+    'my-corporate-plugin-package',
+  ],
+};
+```
+
+## Best Practices
+
+- Use unique issue IDs: `my-plugin-rule-name`
+- Always provide a `suggestion` for scoring impact
+- Use `project.framework` to restrict scope
+- Use appropriate severity levels
+
+## Verify
+
+```bash
+next-optimize plugins
+next-optimize analyze
+```

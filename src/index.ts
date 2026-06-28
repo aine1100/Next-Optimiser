@@ -1,0 +1,17 @@
+export { Scanner } from './core/scanner.js';
+export { Detector } from './core/detector.js';
+export { Scorer } from './core/scorer.js';
+export { Recommender } from './core/recommender.js';
+export { AnalysisEngine } from './core/analyzer.js';
+export { registerDefaultEngines, createScanner } from './core/registerEngines.js';
+export { configLoader, DEFAULT_CONFIG } from './config/configLoader.js';
+export { PluginManager } from './plugins/pluginManager.js';
+export { Optimizer } from './optimize/optimizer.js';
+export { BaselineManager } from './baseline/baselineManager.js';
+export { FixSuggester } from './ai/fixSuggester.js';
+export { MetricsStore, metricsStore } from './server/metricsStore.js';
+export { DashboardServer } from './server/dashboardServer.js';
+export { MarkdownReporter } from './reporting/markdownReporter.js';
+export { SarifReporter } from './reporting/sarifReporter.js';
+export { findSourceFiles, getIgnoreGlobs, SOURCE_DIRS, SOURCE_GLOB_PATTERNS } from './utils/scanUtils.js';
+export * from './types/index.js';

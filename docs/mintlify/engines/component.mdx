@@ -1,0 +1,24 @@
+---
+title: Component Engine
+description: Detects overly complex React components using AST analysis.
+---
+
+# Component Engine
+
+Uses **ts-morph** to parse TypeScript AST and identify complex components.
+
+## Checks
+
+- **Large Component** — Exceeds `componentLocLimit` lines (default 500)
+- **Excessive Hooks** — More than `hookCountLimit` hooks (default 20)
+- **Large Class Component** — Class-based components over the LOC limit
+
+## Detection Heuristic
+
+Components are identified by PascalCase function/variable names:
+
+```tsx
+function MyComponent() { ... }     // ✓ detected
+const MyWidget = () => { ... }     // ✓ detected
+function helper() { ... }           // ✗ skipped (lowercase)
+```

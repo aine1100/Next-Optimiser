@@ -1,0 +1,46 @@
+---
+title: analyze
+description: Run a comprehensive performance analysis on your project.
+icon: magnifying-glass-chart
+---
+
+# analyze
+
+Run a full performance analysis across all 14 engines.
+
+```bash
+next-optimize analyze [options]
+```
+
+## Options
+
+| Flag | Description |
+|------|-------------|
+| `-o, --output <path>` | Custom report output path prefix |
+| `--runtime` | Correlate with runtime metrics from an active monitor session |
+| `--workspace` | Analyze all monorepo workspace packages |
+
+## Examples
+
+```bash
+# Basic analysis
+next-optimize analyze
+
+# With runtime correlation
+next-optimize analyze --runtime
+
+# Monorepo — scan all packages
+next-optimize analyze --workspace
+
+# Custom output path
+next-optimize analyze -o reports/perf
+```
+
+## Output
+
+Generates reports based on your `outputFormats` config:
+- Console summary in terminal
+- `next-optimize-report.html`
+- `next-optimize-report.json`
+- `next-optimize-report.md`
+- `next-optimize-results.sarif`

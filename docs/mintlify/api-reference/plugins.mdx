@@ -1,0 +1,44 @@
+---
+title: Plugin API
+description: PluginInterface reference for custom analysis rules.
+---
+
+# Plugin API
+
+```typescript
+import { PluginManager } from 'next-optimize';
+
+const manager = new PluginManager(config);
+await manager.loadPlugins();
+const issues = await manager.runPlugins(projectInfo);
+```
+
+## PluginInterface
+
+```typescript
+interface PluginInterface {
+  name: string;
+  version: string;
+  initialize: (config: Config) => Promise<void>;
+  analyze: (project: ProjectInfo) => Promise<Issue[]>;
+  report?: (result: AnalysisResult) => Promise<void>;
+}
+```
+
+## Issue Format
+
+```typescript
+interface Issue {
+  id: string;           // unique, e.g. "my-plugin-rule-1"
+  title: string;
+  description: string;
+  severity: 'info' | 'low' | 'medium' | 'high' | 'critical';
+  category: 'bundle' | 'dependency' | 'component' | 'render' | 'memory' | 'image' | 'api' | 'build';
+  file?: string;
+  line?: number;
+  column?: number;
+  suggestion?: string;
+}
+```
+
+Plugins are automatically loaded during `analyze` via the Scanner.
